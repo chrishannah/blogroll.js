@@ -9,7 +9,6 @@ if (blogrolls) {
 		}
 		let blogroll_data_location = blogroll.getAttribute('data-blogroll-file')
 		let blogroll_data = await getBlogrollData(blogroll_data_location)
-		console.log(no_items_to_show)
 		let items_to_show = shuffle(blogroll_data).slice(0, no_items_to_show)
 		let blogroll_list = createBlogrollList(items_to_show)
 		blogroll.appendChild(blogroll_list);

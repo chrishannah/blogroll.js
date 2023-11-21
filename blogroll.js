@@ -1,22 +1,15 @@
-/** blogroll.js Configuration */
-
-// how many items to list in blogroll
-let no_items_to_show = 5;
-
-// list of blogs you want to appear in the blogroll
-// these will be shuffled before blogrolls are populated
-let blogroll_data = [
-	{
-		title: "Example Blog",
-		url: "https://blog.com"
-	}
-]
-
-/** blogroll.js logic */
+/* blogroll.js */
 
 let blogrolls = document.querySelectorAll(".blogroll")
 if (blogrolls) {
-	blogrolls.forEach((blogroll) => {
+	blogrolls.forEach(async (blogroll) => {
+		var no_items_to_show = blogroll.getAttribute('data-max-items')
+		if (no_items_to_show == null) {
+			no_items_to_show = 5
+		}
+		let blogroll_data_location = blogroll.getAttribute('data-blogroll-file')
+		let blogroll_data = await getBlogrollData(blogroll_data_location)
+		console.log(no_items_to_show)
 		let items_to_show = shuffle(blogroll_data).slice(0, no_items_to_show)
 		let blogroll_list = createBlogrollList(items_to_show)
 		blogroll.appendChild(blogroll_list);
@@ -45,4 +38,9 @@ function shuffle(array) {
 			array[randomIndex], array[currentIndex]];
 	}
 	return array;
+}
+
+async function getBlogrollData(blogroll_data_location) {
+	const response = await fetch(blogroll_data_location)
+	return await response.json()
 }

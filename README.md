@@ -4,36 +4,37 @@ A fun little script to add a simple blogroll to your site. You can can add as ma
 
 ## Usage
 
-Inside the `blogroll.js` file, add your list of blogs, and also choose how many you want to appear:
+First of all, you need your blogroll data in a json file. (Refer to [example-data.json](example-data.json) for an example list)
 
-```js
-/** blogroll.js Configuration */
+Essentially, it's an array of JSON objects that have both a title and a url. This data is used to populate the blogroll.
 
-// how many items to list in blogroll
-let no_items_to_show = 5;
+It looks something like this:
 
-// list of blogs you want to appear in the blogroll
-// these will be shuffled before blogrolls are populated
-let blogroll_data = [
+```json
+[
 	{
-		title: "Example Blog",
-		url: "https://blog.com"
+		"title": "Example Blog",
+		"url": "https://blog.com"
 	}
 ]
 ```
 
-Load the script as you would any other JavaScript script, adding `defer` so that it is executed once the page has finished loading:
+Then you'll need to make sure that the `blogroll.js` script is loaded, adding `defer` so that it is executed once the page has finished loading:
 
 ```js
 <script src="blogroll.js" defer></script>
 ```
 
-Then add any HTML element with the class `blogroll`. The script will then build a simple UL element and add it as a child element:
+Then add any HTML element with the class `blogroll`. The script will then build a simple unordered list element and add it as a child element:
 
 ```html
 <h3>Blogroll</h3>
-<p class="blogroll"></p>
+<p class="blogroll" data-max-items="2" data-blogroll-file="blogroll-data.json"></p>
 ```
+
+To customise the number of items to show at a single time, you can change the `data-max-items` of the associated element. If this is not set, 5 will be used as a default value.
+
+And of course, you will need to provide the location of the blogroll JSON data file. This should be provided via a `data-blogroll-file` attribute.
 
 If you want some basic styling, you can start here:
 
